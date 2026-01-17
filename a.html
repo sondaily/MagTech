@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>常轨磁悬浮差动修正模拟器</title>
+    <style>
+        body {
+            margin: 0;
+            background: #e0e0e2;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        /* UI 底部容器 */
+        #bottom-ui {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            pointer-events: auto;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ccc;
+            padding: 15px 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            color: #333;
+        }
+
+        /* 中央主面板 */
+        #center-panel {
+            width: 320px;
+            text-align: center;
+            border-bottom: 4px solid #0056b3;
+        }
+
+        /* 侧边小面板 */
+        .side-panel {
+            width: 160px;
+            padding: 10px 15px;
+        }
+
+        #left-panel {
+            border-left: 4px solid #c82333;
+            text-align: left;
+        }
+
+        #right-panel {
+            border-right: 4px solid #218838;
+            text-align: right;
+        }
+
+        .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #555;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .value {
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #0056b3;
+        }
+
+        /* 主面板数值更大 */
+        #center-panel .value {
+            font-size: 36px;
+        }
+
+        .unit {
+            font-size: 12px;
+            color: #888;
+            margin-left: 4px;
+        }
+
+        #hint {
+            color: #888;
+            margin-top: 8px;
+            font-size: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="overlay">
+        <div id="bottom-ui">
+            <!-- 左侧电流 -->
+            <div id="left-panel" class="panel side-panel">
+                <div class="label">L-Coil Current</div>
+                <div id="val-l" class="value">0.00</div>
+                <span class="unit">A</span>
+            </div>
+
+            <!-- 中央偏移量 -->
+            <div id="center-panel" class="panel">
+                <div class="label">Lateral Offset</div>
+                <div id="val-offset" class="value">0.00</div>
+                <span class="unit">mm</span>
+                <div id="hint">← 移动鼠标模拟轨道波动 →</div>
+            </div>
+
+            <!-- 右侧电流 -->
+            <div id="right-panel" class="panel side-panel">
+                <div class="label">R-Coil Current</div>
+                <div id="val-r" class="value">0.00</div>
+                <span class="unit">A</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+            "three/examples/jsm/postprocessing/": "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/",
+            "three/examples/jsm/environments/": "https://unpkg.com/three@0.160.0/examples/jsm/environments/"
+        }
+    }
+</script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+
+        let scene, camera, renderer, controls, composer;
+        let magnetGroup, coilL, coilR;
+        let mouseX = 0;
+
+        const CONFIG = {
+            targetX: 0,
+            maxOffset: 0.5,
+            currentScale: 4.5,
+            emissiveIntensity: 15.0,
+            modelScale: 5,
+            envMapIntensity: 0.4
+        };
+
+        init();
+
+        function init() {
+            console.log('Initializing scene...');
+
+            // 场景与相机
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xe0e0e2);
+
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.set(300, 250, 500);
+
+            // 渲染器
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.0;
+            document.body.appendChild(renderer.domElement);
+
+            // 环境贴图
+            const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+
+            // 环境光与灯光
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
+            scene.add(hemiLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            dirLight.position.set(200, 400, 100);
+            scene.add(dirLight);
+
+            // 控制器
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            // 后期处理 (Bloom)
+            const renderScene = new RenderPass(scene, camera);
+            const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+            bloomPass.threshold = 0.95;
+            bloomPass.strength = 1.8;
+            bloomPass.radius = 0.3;
+
+            composer = new EffectComposer(renderer);
+            composer.addPass(renderScene);
+            composer.addPass(bloomPass);
+
+            const loader = new GLTFLoader();
+
+            // 1. 加载轨道组
+            console.log('Loading rail model...');
+            loader.load('./轨道组.glb',
+                (gltf) => {
+                    console.log('Rail model loaded successfully');
+                    const rail = gltf.scene;
+                    rail.scale.setScalar(CONFIG.modelScale);
+                    rail.traverse(child => {
+                        if (child.isMesh && child.material) {
+                            child.material.envMapIntensity = CONFIG.envMapIntensity;
+                        }
+                    });
+                    scene.add(rail);
+                },
+                undefined,
+                (error) => {
+                    console.error('Error loading rail model:', error);
+                }
+            );
+
+            // 2. 加载磁体组
+            console.log('Loading magnet model...');
+            loader.load('./磁体组.glb',
+                (gltf) => {
+                    console.log('Magnet model loaded successfully');
+                    magnetGroup = gltf.scene;
+                    magnetGroup.scale.setScalar(CONFIG.modelScale);
+
+                    magnetGroup.traverse((child) => {
+                        if (child.isMesh && child.material) {
+                            child.material.envMapIntensity = CONFIG.envMapIntensity;
+
+                            const name = child.name.toLowerCase();
+                            if (name.includes('coil_l')) {
+                                coilL = child;
+                                console.log('Found Coil_L');
+                            }
+                            if (name.includes('coil_r')) {
+                                coilR = child;
+                                console.log('Found Coil_R');
+                            }
+                        }
+                    });
+
+                    [coilL, coilR].forEach(c => {
+                        if (c) {
+                            c.material = c.material.clone();
+                            c.material.emissive = new THREE.Color(0xffaa00);
+                            c.material.emissiveIntensity = 0;
+                        }
+                    });
+                    scene.add(magnetGroup);
+                },
+                undefined,
+                (error) => {
+                    console.error('Error loading magnet model:', error);
+                }
+            );
+
+            window.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            });
+
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (magnetGroup) {
+                const targetPosX = mouseX * CONFIG.maxOffset;
+                magnetGroup.position.x += (targetPosX - magnetGroup.position.x) * 0.1;
+
+                const offset = magnetGroup.position.x;
+
+                let currentL = 0;
+                let currentR = 0;
+
+                if (offset > 0.01) {
+                    currentL = (offset / CONFIG.maxOffset) * 20;
+                    currentR = 0;
+                } else if (offset < -0.01) {
+                    currentR = (Math.abs(offset) / CONFIG.maxOffset) * 20;
+                    currentL = 0;
+                }
+
+                document.getElementById('val-offset').innerText = (offset * 100).toFixed(2);
+                document.getElementById('val-l').innerText = currentL.toFixed(2);
+                document.getElementById('val-r').innerText = currentR.toFixed(2);
+
+                if (coilL) coilL.material.emissiveIntensity = currentL * 2.5;
+                if (coilR) coilR.material.emissiveIntensity = currentR * 2.5;
+            }
+
+            controls.update();
+            composer.render();
+        }
+    </script>
+</body>
+
+</html>

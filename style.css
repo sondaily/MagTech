@@ -383,6 +383,92 @@ nav.scrolled {
     transform: scale(1.1);
 }
 
+/* Simulation Section */
+#sim-container {
+    width: 100%;
+    height: 600px;
+    background: var(--bg-light);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+#sim-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+}
+
+#sim-ui {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.5rem;
+    pointer-events: auto;
+}
+
+.sim-panel {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    min-width: 140px;
+}
+
+.sim-panel.center {
+    min-width: 240px;
+    border-bottom: 4px solid var(--primary);
+}
+
+.sim-panel.side-l {
+    border-left: 4px solid #ff4d4d;
+}
+
+.sim-panel.side-r {
+    border-right: 4px solid #4dff4d;
+}
+
+.sim-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.sim-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    color: var(--primary);
+}
+
+.sim-unit {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: 0.2rem;
+}
+
+.sim-hint {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    opacity: 0.6;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 0.5rem;
+}
+
 @media (max-width: 1024px) {
     h1 {
         font-size: 3.5rem;
@@ -476,6 +562,25 @@ nav.scrolled {
 
     .nav-links.active {
         right: 0;
+    }
+
+    #sim-container {
+        height: 400px;
+    }
+
+    #sim-ui {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .sim-panel {
+        min-width: 180px;
+        padding: 0.5rem 1rem;
+    }
+
+    .sim-value {
+        font-size: 1.4rem;
     }
 }
 

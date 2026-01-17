@@ -12,6 +12,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+            "three/examples/jsm/postprocessing/": "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/",
+            "three/examples/jsm/environments/": "https://unpkg.com/three@0.160.0/examples/jsm/environments/"
+        }
+    }
+    </script>
 </head>
 
 <body>
@@ -124,12 +134,28 @@
                 </div>
             </div>
 
-            <div class="reveal" style="margin-top: 10rem; display: flex; justify-content: center;">
-                <div style="width: 100%;  overflow: hidden; ">
-                    <video autoplay muted loop playsinline preload="none" loading="lazy"
-                        style="width: 100%; display: block;">
-                        <source src="image/模拟.mp4" type="video/mp4">
-                    </video>
+            <div class="reveal" style="margin-top: 10rem; display: flex; justify-content: center; position: relative;">
+                <div id="sim-container">
+                    <div id="sim-overlay">
+                        <div id="sim-ui">
+                            <div class="sim-panel side-l">
+                                <div class="sim-label">L-Coil Current</div>
+                                <div id="val-l" class="sim-value">0.00</div>
+                                <span class="sim-unit">A</span>
+                            </div>
+                            <div class="sim-panel center">
+                                <div class="sim-label">Lateral Offset</div>
+                                <div id="val-offset" class="sim-value">0.00</div>
+                                <span class="sim-unit">mm</span>
+                                <div class="sim-hint">← 移动鼠标模拟轨道波动 →</div>
+                            </div>
+                            <div class="sim-panel side-r">
+                                <div class="sim-label">R-Coil Current</div>
+                                <div id="val-r" class="sim-value">0.00</div>
+                                <span class="sim-unit">A</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -263,6 +289,7 @@
     </div>
 
     <script src="script.js"></script>
+    <script type="module" src="maglev-sim.js"></script>
 </body>
 
 </html>
