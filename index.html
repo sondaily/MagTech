@@ -57,7 +57,7 @@
 
     <section id="tech">
         <div class="container">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div class="tech-grid">
                 <div class="reveal">
                     <h2>磁悬浮，从此简单高效</h2>
                     <p>
@@ -138,7 +138,7 @@
     <section id="benefits" style="background: var(--bg-light);">
         <div class="container">
             <h2 style="text-align: center;" class="reveal">为什么选择常轨磁悬浮？</h2>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem;">
+            <div class="benefits-grid">
                 <div class="glass-card reveal">
                     <h3 style="color: var(--primary); margin-bottom: 1rem;">告别摩擦</h3>
                     <img src="image/11.png" alt="告别摩擦" class="benefit-img" loading="lazy">
@@ -159,7 +159,7 @@
     </section>
 
     <section id="apps" style="padding: 0;">
-        <div class="reveal" style="height: 100vh; width: 60%;margin: 0 auto; overflow: hidden;">
+        <div class="reveal apps-video-container">
             <video autoplay muted loop playsinline poster="image/5.png" preload="none" loading="lazy"
                 style="width: 100%; height: 100%; object-fit: cover;">
                 <source src="image/宣传1.mp4" type="video/mp4">
@@ -190,10 +190,10 @@
     <section id="contact" style="padding: 8rem 0; background: var(--bg-dark);">
         <div class="container">
             <div class="reveal">
-                <h2 style="font-size: 3.5rem; margin-bottom: 4rem;">联系我们</h2>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;">
+                <h2 class="contact-title">联系我们</h2>
+                <div class="contact-grid">
                     <div>
-                        <div class="glass-card" style="padding: 3rem;">
+                        <div class="glass-card contact-form-card">
                             <h3 style="margin-bottom: 2rem;">发送消息</h3>
                             <form action="https://formspree.io/f/xqeeajwp" method="POST" id="contact-form">
                                 <div class="form-group">
@@ -214,7 +214,7 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <div class="contact-info">
                         <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-main);">
                             MagTech 是一项极具颠覆性且极其灵活的创新，可应用于多个领域。
                         </p>
@@ -222,7 +222,7 @@
                             我们的团队随时为您解答疑问，并为您的业务研究最佳解决方案。
                         </p>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="contact-details">
                             <div>
                                 <h4
                                     style="color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 0.5rem;">
@@ -239,12 +239,11 @@
 
     <footer style="padding: 4rem 0; border-top: 1px solid var(--glass-border); background: var(--bg-dark);">
         <div class="container">
-            <div
-                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+            <div class="footer-content">
                 <div class="logo">
                     <img src="image/商标.png" alt="MAGTECH Logo">
                 </div>
-                <div style="display: flex; gap: 2rem;">
+                <div class="footer-links">
                     <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">隐私政策</a>
                     <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">Cookie
                         政策</a>

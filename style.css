@@ -168,6 +168,68 @@ section {
     border: 1px solid var(--glass-border);
 }
 
+/* Section Specific Layouts */
+.tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.apps-video-container {
+    height: 100vh;
+    width: 60%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.contact-title {
+    font-size: 3.5rem;
+    margin-bottom: 4rem;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+}
+
+.contact-form-card {
+    padding: 3rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
 /* Form Styles */
 .form-group {
     margin-bottom: 1.5rem;
@@ -321,7 +383,74 @@ nav.scrolled {
     transform: scale(1.1);
 }
 
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    .tech-grid,
+    .contact-grid {
+        gap: 2rem;
+    }
+
+    .apps-video-container {
+        width: 80%;
+    }
+}
+
 @media (max-width: 768px) {
+    h1 {
+        font-size: 2.8rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    section {
+        padding: 5rem 0;
+    }
+
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    #navbar .container {
+        padding: 0 1.5rem;
+    }
+
+    .tech-grid,
+    .benefits-grid,
+    .contact-grid,
+    .contact-details {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .apps-video-container {
+        width: 100%;
+        height: 60vh;
+    }
+
+    .contact-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .contact-form-card {
+        padding: 2rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+    }
+
     .image-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
@@ -351,8 +480,17 @@ nav.scrolled {
 }
 
 @media (max-width: 480px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
     .image-grid {
         grid-template-columns: 1fr;
+    }
+
+    .btn {
+        padding: 0.8rem 2rem;
+        width: 100%;
     }
 }
 
