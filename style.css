@@ -50,6 +50,26 @@ p {
     color: var(--text-muted);
 }
 
+.lang-switch {
+    margin-left: 1.5rem;
+}
+
+#lang-btn {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#lang-btn:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+
 /* Layout */
 .container {
     max-width: 1200px;
