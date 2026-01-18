@@ -51,23 +51,16 @@ p {
 }
 
 .lang-switch {
-    margin-left: 1.5rem;
+    position: relative;
+    z-index: 9999;
 }
 
 #lang-btn {
-    background: transparent;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
+    position: relative;
+    z-index: 10000;
+    pointer-events: auto;
 }
 
-#lang-btn:hover {
-    background: var(--primary);
-    color: #fff;
-}
 
 
 /* Layout */
