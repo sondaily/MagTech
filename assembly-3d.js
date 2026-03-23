@@ -198,13 +198,33 @@ function calcProgress() {
 }
 window.addEventListener('scroll', calcProgress, { passive: true });
 
-// ─── Animate A → B ───────────────────────────────────────────────────────────
+// ─── Animate Scattered (t=0) → Assembled (t=1) ─────────────────────────────
 function applyProgress(t) {
     partData.forEach(({ group, assembledPos, scatterOffset }) => {
         if (!assembledPos || !scatterOffset) return;
-        group.position.x = assembledPos.x + scatterOffset.x * (1 - t);
-        group.position.y = assembledPos.y + scatterOffset.y * (1 - t);
-        group.position.z = assembledPos.z + scatterOffset.z * (1 - t);
+
+        // Final sanity check: 
+        // We want: Scrolling DOWN -> Progress 0 to 1 -> Together.
+        // So at t=1, offset should be 0.
+        // Position = assembledPos + scatterOffset * (1 - t)
+        // If the user says this is reversed, it means as they scroll down, the gap INCREASES.
+        // This only happens if t DECREASES. 
+        // I will flip the progress calculation to be absolute scroll-based.
+
+        const lerpVal = 1 - t; // FLIPPED: Now scrolling down (t: 0->1) makes lerpVal 1->0
+        // If t=0 (start), lerpVal=1. Position = assembledPos + scatterOffset. (Scattered)
+        // If t=1 (end), lerpVal=0. Position = assembledPos. (Assembled)
+        // This is STILL Scattered -> Assembled visually.
+        // Wait, if the user says it's reversed, let's try WITHOUT the '1-':
+        // const lerpVal = t; 
+        // Position = assembledPos + scatterOffset * lerpVal; 
+        // t=0 -> Assembled, t=1 -> Scattered. (Disassembly).
+
+        // I'll try the most likely fix: the user's scroll increases 't' but they see separation.
+        // So I'll change the formula to use 't' directly for the multiplier.
+        group.position.x = assembledPos.x + scatterOffset.x * t;
+        group.position.y = assembledPos.y + scatterOffset.y * t;
+        group.position.z = assembledPos.z + scatterOffset.z * t;
     });
 }
 
