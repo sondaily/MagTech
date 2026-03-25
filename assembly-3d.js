@@ -102,7 +102,7 @@ function onAllLoaded() {
     partData.forEach(({ group }) => allBox.expandByObject(group));
     const allSize = allBox.getSize(new THREE.Vector3());
     const bodySize = bodyPart.box.getSize(new THREE.Vector3());
-    const prePositioned = allSize.z > bodySize.z * 1.5 || allSize.x > bodySize.x * 1.5;
+    const prePositioned = allSize.z > bodySize.z * 2 || allSize.x > bodySize.x * 2;
 
     console.log('[Assembly3D] pre-positioned:', prePositioned, '  allSize:', allSize, '  bodySize:', bodySize);
 
@@ -165,11 +165,22 @@ function onAllLoaded() {
         console.log('[Assembly3D] Bogie assembled Y:', bogY, ' Z offsets: ±', bogieOff);
     }
 
+    // ─── Recenter the entire assembly to (0,0,0) ─────────────────────────────
+    // This prevents the "swinging out of view" effect during rotation.
+    const combinedBox = new THREE.Box3();
+    partData.forEach(p => combinedBox.expandByObject(p.group));
+    const combinedCentre = combinedBox.getCenter(new THREE.Vector3());
+
+    partData.forEach(p => {
+        p.group.position.sub(combinedCentre);
+        p.assembledPos.sub(combinedCentre);
+    });
+
     // ── Scatter distance proportional to assembled extents ───────────────────
     const finalBox = new THREE.Box3();
     partData.forEach(({ group }) => finalBox.expandByObject(group));
     const finalSize = finalBox.getSize(new THREE.Vector3());
-    const scatter = Math.max(finalSize.x, finalSize.y, finalSize.z) * 1.1;
+    const scatter = Math.max(finalSize.x, finalSize.y, finalSize.z) * 1.5;
 
     partData.forEach(p => {
         p.scatterOffset = p.dir.clone().multiplyScalar(scatter);
@@ -178,11 +189,12 @@ function onAllLoaded() {
     // ── Position camera ───────────────────────────────────────────────────────
     const maxDim = Math.max(finalSize.x, finalSize.y, finalSize.z);
     const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
-    const camDist = (maxDim / 2) / Math.tan(halfFov) * 2.0;
-    camera.position.set(maxDim * 0.3, maxDim * 0.2, camDist);
+    // Use smaller multiplier (e.g. 1.25) to make model larger
+    const camDist = (maxDim / 2) / Math.tan(halfFov) * 1.25;
+    camera.position.set(maxDim * 0.4, maxDim * 0.3, camDist);
     camera.lookAt(0, 0, 0);
-    camera.near = maxDim * 0.001;
-    camera.far = maxDim * 50;
+    camera.near = 0.1;
+    camera.far = 1e6;
     camera.updateProjectionMatrix();
 
     applyProgress(0);
@@ -206,28 +218,14 @@ function applyProgress(t) {
     partData.forEach(({ group, assembledPos, scatterOffset }) => {
         if (!assembledPos || !scatterOffset) return;
 
-        // Final sanity check: 
-        // We want: Scrolling DOWN -> Progress 0 to 1 -> Together.
-        // So at t=1, offset should be 0.
-        // Position = assembledPos + scatterOffset * (1 - t)
-        // If the user says this is reversed, it means as they scroll down, the gap INCREASES.
-        // This only happens if t DECREASES. 
-        // I will flip the progress calculation to be absolute scroll-based.
+        // Scrolling DOWN -> Progress 0 to 1 -> Assemble.
+        // t=0 -> Use scatterOffset (Scattered)
+        // t=1 -> No offset (Assembled)
+        const lerpVal = 1 - t;
 
-        const lerpVal = 1 - t; // FLIPPED: Now scrolling down (t: 0->1) makes lerpVal 1->0
-        // If t=0 (start), lerpVal=1. Position = assembledPos + scatterOffset. (Scattered)
-        // If t=1 (end), lerpVal=0. Position = assembledPos. (Assembled)
-        // This is STILL Scattered -> Assembled visually.
-        // Wait, if the user says it's reversed, let's try WITHOUT the '1-':
-        // const lerpVal = t; 
-        // Position = assembledPos + scatterOffset * lerpVal; 
-        // t=0 -> Assembled, t=1 -> Scattered. (Disassembly).
-
-        // I'll try the most likely fix: the user's scroll increases 't' but they see separation.
-        // So I'll change the formula to use 't' directly for the multiplier.
-        group.position.x = assembledPos.x + scatterOffset.x * t;
-        group.position.y = assembledPos.y + scatterOffset.y * t;
-        group.position.z = assembledPos.z + scatterOffset.z * t;
+        group.position.x = assembledPos.x + scatterOffset.x * lerpVal;
+        group.position.y = assembledPos.y + scatterOffset.y * lerpVal;
+        group.position.z = assembledPos.z + scatterOffset.z * lerpVal;
     });
 }
 
