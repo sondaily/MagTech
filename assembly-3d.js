@@ -180,7 +180,7 @@ function onAllLoaded() {
     const finalBox = new THREE.Box3();
     partData.forEach(({ group }) => finalBox.expandByObject(group));
     const finalSize = finalBox.getSize(new THREE.Vector3());
-    const scatter = Math.max(finalSize.x, finalSize.y, finalSize.z) * 1.5;
+    const scatter = Math.max(finalSize.x, finalSize.y, finalSize.z) * 0.4;
 
     partData.forEach(p => {
         p.scatterOffset = p.dir.clone().multiplyScalar(scatter);
