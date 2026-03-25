@@ -207,9 +207,16 @@ function onAllLoaded() {
 let progress = 0, targetProgress = 0;
 function calcProgress() {
     if (!wrapper) return;
-    const rect = wrapper.getBoundingClientRect();
-    const total = wrapper.offsetHeight - window.innerHeight;
-    targetProgress = Math.max(0, Math.min(1, -rect.top / total));
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const wrapperTop = wrapper.offsetTop;
+    const wrapperHeight = wrapper.offsetHeight;
+    const windowHeight = window.innerHeight;
+
+    // Calculate progress (0 to 1) based on sticky range
+    const start = wrapperTop;
+    const end = wrapperTop + wrapperHeight - windowHeight;
+
+    targetProgress = Math.max(0, Math.min(1, (scrollY - start) / (end - start)));
 }
 window.addEventListener('scroll', calcProgress, { passive: true });
 
