@@ -734,6 +734,7 @@ model-viewer {
     width: 100% !important;
     height: 100% !important;
     display: block;
+    z-index: 10;
 }
 
 /* Gradient vignette overlay */
@@ -743,7 +744,7 @@ model-viewer {
     inset: 0;
     background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 10, 12, 0.7) 100%);
     pointer-events: none;
-    z-index: 1;
+    z-index: 20;
 }
 
 #assembly-overlay {
@@ -755,7 +756,7 @@ model-viewer {
     justify-content: space-between;
     padding: 4rem 2rem 3rem;
     pointer-events: none;
-    z-index: 2;
+    z-index: 30;
 }
 
 #assembly-label {

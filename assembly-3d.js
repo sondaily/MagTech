@@ -10,6 +10,7 @@ const labelEl = document.getElementById('assembly-label');
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x000000, 0); // Ensure transparency
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.6;
@@ -186,6 +187,8 @@ function onAllLoaded() {
 
     applyProgress(0);
     dismissLoading();
+    // Force immediate resize after models loaded
+    resize();
 }
 
 // ─── Scroll progress ──────────────────────────────────────────────────────────
@@ -242,13 +245,25 @@ function updateUI(t) {
 // ─── Resize ───────────────────────────────────────────────────────────────────
 function resize() {
     const sec = document.getElementById('assembly-section');
-    if (!sec || !sec.clientWidth || !sec.clientHeight) return;
-    renderer.setSize(sec.clientWidth, sec.clientHeight);
-    camera.aspect = sec.clientWidth / sec.clientHeight;
+    if (!sec) return;
+
+    // On some mobile devices, initial clientWidth/Height can be 0.
+    // We retry in common cases.
+    const w = sec.clientWidth;
+    const h = sec.clientHeight;
+
+    if (w < 10 || h < 10) {
+        requestAnimationFrame(resize);
+        return;
+    }
+
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
     camera.updateProjectionMatrix();
 }
 window.addEventListener('resize', resize);
-requestAnimationFrame(resize);
+// Start resize cycle
+resize();
 
 // ─── Render loop ──────────────────────────────────────────────────────────────
 const clock = new THREE.Clock();
