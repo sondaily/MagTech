@@ -1041,3 +1041,16 @@ footer .footer-links a:hover {
     opacity: 0;
     transform: translateY(30px);
 }
+
+/* 移动端响应式适配 */
+@media (max-width: 768px) {
+
+    /* 画廊一列显示，并调整图片高度 */
+    #gallery-step .gallery-track {
+        grid-template-columns: 1fr !important;
+    }
+
+    #gallery-step .gallery-item {
+        height: 250px !important;
+    }
+}
