@@ -11,10 +11,28 @@ const i18n = {
             apps: "应用场景",
             contact: "联系我们"
         },
+        loading: {
+            text: "正在加载 3D 叙事体验..."
+        },
         hero: {
             title: "让磁悬浮<br><span style='color: var(--primary)'>在现有轨道</span>上飞驰",
             desc: "无需电力，无需新建轨道，在普通铁轨上实现静默、无摩擦的悬浮运输。",
-            button: "了解技术细节"
+            button: "了解技术细节",
+            scroll: "向下滚动开启旅程"
+        },
+        bogieEx: {
+            title: "磁悬浮，从此简单高效",
+            desc: "我们的方案基于铁磁材料的简单特性。这意味着它可以在任何铁轨上运行，无需建造昂贵的专用基础设施。",
+            passive: "被动悬浮",
+            active: "动态控制",
+            activeDesc: "通过混合磁场动态主动控制，确保完美的中心对齐，即使轨道有微小瑕疵也能平稳运行。"
+        },
+        assembly: {
+            title: "核心精密结构",
+            desc: "常轨磁悬浮系统由高强度合金车体与先进的悬浮转向架组成。每一个部件都代表了精密制造的巅峰。",
+            body: "主车体",
+            bogieF: "前端转向架",
+            bogieR: "后端转向架"
         },
         tech: {
             title: "磁悬浮，从此简单高效",
@@ -25,6 +43,7 @@ const i18n = {
             activeDesc: "通过混合磁场动态主动控制，确保完美的中心对齐，即使轨道有微小瑕疵也能平稳运行。"
         },
         sim: {
+            title: "实时动态响应模拟",
             coilL: "左线圈电流",
             coilR: "右线圈电流",
             offset: "横向偏移",
@@ -46,6 +65,10 @@ const i18n = {
             item2: "工业自动化集装箱运输",
             item3: "跨城市高速客运系统",
             videoFallback: "您的浏览器不支持视频播放。"
+        },
+        gallery: {
+            title: "实拍展示",
+            desc: "近距离感受常轨磁悬浮技术的工业魅力。"
         },
         contact: {
             title: "联系我们",
@@ -82,10 +105,28 @@ const i18n = {
             apps: "Applications",
             contact: "Contact"
         },
+        loading: {
+            text: "Loading 3D Experience..."
+        },
         hero: {
             title: "Maglev<br><span style='color: var(--primary)'>on Existing Railways</span>",
             desc: "No power supply, no new tracks. Silent, frictionless levitation on standard rails.",
-            button: "Explore the Technology"
+            button: "Learn More",
+            scroll: "Scroll down to start"
+        },
+        bogieEx: {
+            title: "Maglev, Simple and Efficient",
+            desc: "Our solution is based on the simple properties of ferromagnetic materials. This means it can run on any existing rail without expensive dedicated infrastructure.",
+            passive: "Passive Levitation",
+            active: "Dynamic Control",
+            activeDesc: "Through hybrid magnetic field dynamic active control, perfect center alignment is ensured, enabling smooth operation even on rails with minor flaws."
+        },
+        assembly: {
+            title: "Precision Core Structure",
+            desc: "The MagTech system consists of a high-strength alloy body and advanced levitation bogies. Every component represents the pinnacle of precision manufacturing.",
+            body: "Main Body",
+            bogieF: "Front Bogie",
+            bogieR: "Rear Bogie"
         },
         tech: {
             title: "Maglev Made Simple and Efficient",
@@ -96,6 +137,7 @@ const i18n = {
             activeDesc: "Hybrid magnetic field control ensures perfect alignment even on imperfect tracks."
         },
         sim: {
+            title: "Real-time Dynamic Response Sim",
             coilL: "L-Coil Current",
             coilR: "R-Coil Current",
             offset: "Lateral Offset",
@@ -115,8 +157,12 @@ const i18n = {
             desc: "From expanding rail transit options to industrial automated logistics, MagTech offers infinite possibilities for future transportation.",
             item1: "Adaptive Distributed Transport System",
             item2: "Industrial Automated Container Transport",
-            item3: "Inter-city High-speed Passenger System",
-            videoFallback: "Your browser does not support video playback."
+            item3: "Cross-city high-speed passenger system",
+            videoFallback: "Your browser does not support the video tag."
+        },
+        gallery: {
+            title: "Gallery",
+            desc: "Experience the industrial charm of MagTech technology up close."
         },
         contact: {
             title: "Contact Us",
@@ -142,6 +188,7 @@ const i18n = {
         }
     }
 };
+
 
 let currentLang = localStorage.getItem("lang") || "zh";
 
