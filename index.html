@@ -305,8 +305,8 @@
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/17.webp" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                      
-                       
+
+
                         <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/20.webp" style="width: 100%; height: 100%; object-fit: cover;">
@@ -315,7 +315,7 @@
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/21.webp" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                      
+
                         <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/33.webp" style="width: 100%; height: 100%; object-fit: cover;">
@@ -348,7 +348,7 @@
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/22222222.webp" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                        
+
                         <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/44444444.webp" style="width: 100%; height: 100%; object-fit: cover;">
@@ -357,9 +357,9 @@
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/55555555.webp" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                       
-                       
-                       
+
+
+
                         <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
                             <img src="image_1/222222222.webp" style="width: 100%; height: 100%; object-fit: cover;">
@@ -370,11 +370,13 @@
                         </div>
                         <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/Untitled1111111.webp" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="image_1/Untitled1111111.webp"
+                                style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
                             style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/Untitled11111111.webp" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="image_1/Untitled11111111.webp"
+                                style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                     </div>
                 </div>
@@ -461,19 +463,7 @@
         </div> <!-- End story-content -->
     </div> <!-- End scrolly-container -->
 
-    <div id="lightbox" class="lightbox">
-        <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-    </div>
-
-    <script src="threads-bg.js"></script>
-    <script src="script.js"></script>
-    <script type="module" src="maglev-sim.js"></script>
-    <script type="module" src="assembly-3d.js"></script>
-    <script src="i18n.js"></script>
-
-    <!-- Lightbox -->
-    <div id="lightbox" onclick="closeLightbox()" style="
+    <div id="lightbox" onclick="window.closeLightbox()" style="
         display:none; position:fixed; inset:0; z-index:9999;
         background:rgba(0,0,0,0.92); align-items:center; justify-content:center;
         backdrop-filter:blur(8px); cursor:zoom-out;">
@@ -481,25 +471,17 @@
             max-width:90vw; max-height:90vh; border-radius:12px;
             box-shadow:0 0 60px rgba(0,0,0,0.8);
             transition:opacity .3s ease;" />
-        <button onclick="closeLightbox()" style="
+        <button onclick="window.closeLightbox()" class="lightbox-close" style="
             position:absolute; top:1.5rem; right:2rem; background:none;
             border:none; color:#fff; font-size:2.5rem; cursor:pointer;
-            line-height:1;">×</button>
+            line-height:1;">&times;</button>
     </div>
-    <script>
-        function openLightbox(src) {
-            const lb = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            img.src = src;
-            lb.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.body.style.overflow = '';
-        }
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-    </script>
+
+    <script src="threads-bg.js"></script>
+    <script src="script.js"></script>
+    <script type="module" src="maglev-sim.js"></script>
+    <script type="module" src="assembly-3d.js"></script>
+    <script src="i18n.js"></script>
 </body>
 
 </html>

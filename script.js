@@ -112,35 +112,41 @@ const lightboxImg = document.getElementById('lightbox-img');
 const lightboxClose = document.querySelector('.lightbox-close');
 const gridImages = document.querySelectorAll('.grid-item img');
 
+window.openLightbox = function (src) {
+    if (!lightbox || !lightboxImg) return;
+    lightboxImg.src = src;
+    lightbox.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+};
+
+window.closeLightbox = function () {
+    if (!lightbox) return;
+    lightbox.style.display = 'none';
+    document.body.style.overflow = ''; // Restore scrolling
+};
+
 gridImages.forEach(img => {
     img.style.cursor = 'zoom-in';
     img.addEventListener('click', () => {
-        lightbox.style.display = 'block';
-        lightboxImg.src = img.src;
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        window.openLightbox(img.src);
     });
 });
 
-const closeLightbox = () => {
-    lightbox.style.display = 'none';
-    document.body.style.overflow = 'auto'; // Restore scrolling
-};
-
 if (lightboxClose) {
-    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxClose.addEventListener('click', window.closeLightbox);
 }
 
 if (lightbox) {
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
-            closeLightbox();
+            window.closeLightbox();
         }
     });
 }
 
 // Close on Escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.style.display === 'block') {
-        closeLightbox();
+    if (e.key === 'Escape' && (lightbox.style.display === 'block' || lightbox.style.display === 'flex')) {
+        window.closeLightbox();
     }
 });
