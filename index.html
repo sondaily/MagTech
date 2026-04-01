@@ -128,6 +128,33 @@
                 </div>
             </section>
 
+            <!-- 新增：核心参数展示 -->
+            <section id="specs-step" class="story-step" style="padding: 4rem 0;">
+                <div class="container">
+                    <div
+                        style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; text-align: center;">
+                        <div style="flex: 1; min-width: 200px; padding: 2rem;">
+                            <h3
+                                style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
+                                200<span style="font-size: 1.2rem;"> km/h</span></h3>
+                            <p style="color: var(--text-muted);">设计时速</p>
+                        </div>
+                        <div style="flex: 1; min-width: 200px; padding: 2rem;">
+                            <h3
+                                style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
+                                4~6<span style="font-size: 1.2rem;"> 人</span></h3>
+                            <p style="color: var(--text-muted);">单舱乘员</p>
+                        </div>
+                        <div style="flex: 1; min-width: 200px; padding: 2rem;">
+                            <h3
+                                style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
+                                0<span style="font-size: 1.2rem;"> 摩擦</span></h3>
+                            <p style="color: var(--text-muted);">被动悬浮运行</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- 2. 核心结构展示 (纯 3D) -->
             <section id="assembly-step" class="story-step">
                 <!-- 已移除文本，仅保留空容器作为滚动占位 -->
@@ -137,7 +164,7 @@
             <!-- 3. 技术原理 (被动悬浮) -->
             <section id="tech-passive" class="story-step">
                 <div class="container">
-                    <div class="side-content left animate-text">
+                    <div class="side-content left animate-text" style="background: transparent; border: none;">
                         <h2 data-i18n="tech.passive">被动悬浮技术</h2>
                         <p data-i18n="tech.passiveDesc">
                             基于特殊排列的永磁体，无需外部电力即可实现物体悬浮。
@@ -153,7 +180,7 @@
             <!-- 4. 技术原理 (动态控制) -->
             <section id="tech-active" class="story-step">
                 <div class="container">
-                    <div class="side-content right animate-text">
+                    <div class="side-content right animate-text" style="background: transparent; border: none;">
                         <h2 data-i18n="tech.active">动态控制系统</h2>
                         <p data-i18n="tech.activeDesc">
                             通过混合磁场动态主动控制，确保完美的中心对齐。
