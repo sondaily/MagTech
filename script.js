@@ -147,9 +147,7 @@ if (lightbox) {
 /* ─── Image Reveal Logic (GSAP Pinning & Bidirectional) ────────── */
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Image Reveal Logic (Multi-Item GSAP Loop) ────────────────── */
-gsap.registerPlugin(ScrollTrigger);
-
+/* ─── Image Reveal Logic (GSAP Pinning Loop) ─────────────────── */
 const revealSteps = document.querySelectorAll('.image-reveal-step');
 
 revealSteps.forEach((step) => {
@@ -166,7 +164,7 @@ revealSteps.forEach((step) => {
             scrollTrigger: {
                 trigger: step,
                 start: "top top",
-                end: "+=1500",
+                end: "+=1500", // 增加深度感
                 pin: true,
                 scrub: 1,
                 invalidateOnRefresh: true,
@@ -174,6 +172,7 @@ revealSteps.forEach((step) => {
             }
         });
 
+        // 绑定同步动画
         revealTimeline.to(colorImg, {
             clipPath: "inset(0 0% 0 0)",
             ease: "none"
@@ -198,6 +197,9 @@ revealSteps.forEach((step) => {
         }, 0);
     }
 });
+
+// 确保刷新，避免布局偏移
+ScrollTrigger.refresh();
 
 // Close on Escape key
 document.addEventListener('keydown', (e) => {

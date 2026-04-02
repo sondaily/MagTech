@@ -1139,6 +1139,8 @@ footer .footer-links a:hover {
 .image-reveal-step {
     background: var(--bg-dark);
     transition: none !important;
+    z-index: 20;
+    /* 提升层级，防止被后续章节遮盖 */
 }
 
 .image-reveal-step .container {
