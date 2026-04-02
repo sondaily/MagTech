@@ -144,6 +144,61 @@ if (lightbox) {
     });
 }
 
+/* ─── Image Reveal Logic (GSAP Pinning & Bidirectional) ────────── */
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─── Image Reveal Logic (Multi-Item GSAP Loop) ────────────────── */
+gsap.registerPlugin(ScrollTrigger);
+
+const revealSteps = document.querySelectorAll('.image-reveal-step');
+
+revealSteps.forEach((step) => {
+    const colorImg = step.querySelector('.color-reveal-image');
+    const scanLine = step.querySelector('.reveal-scan-line');
+    const percentTxt = step.querySelector('.percent-text');
+
+    if (colorImg && scanLine) {
+        // 显式设置初始状态
+        gsap.set(colorImg, { clipPath: "inset(0 100% 0 0)" });
+        gsap.set(scanLine, { left: "0%", display: "none" });
+
+        const revealTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: step,
+                start: "top top",
+                end: "+=1500",
+                pin: true,
+                scrub: 1,
+                invalidateOnRefresh: true,
+                anticipatePin: 1
+            }
+        });
+
+        revealTimeline.to(colorImg, {
+            clipPath: "inset(0 0% 0 0)",
+            ease: "none"
+        }, 0);
+
+        revealTimeline.to(scanLine, {
+            left: "100%",
+            ease: "none"
+        }, 0);
+
+        revealTimeline.set(scanLine, { display: "block" }, 0.01);
+        revealTimeline.set(scanLine, { display: "none" }, 0.99);
+
+        revealTimeline.to({}, {
+            duration: 1,
+            onUpdate: function () {
+                if (percentTxt) {
+                    percentTxt.innerText = Math.round(this.progress() * 100);
+                }
+            },
+            ease: "none"
+        }, 0);
+    }
+});
+
 // Close on Escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && (lightbox.style.display === 'block' || lightbox.style.display === 'flex')) {
