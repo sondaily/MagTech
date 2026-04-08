@@ -1137,7 +1137,7 @@ footer .footer-links a:hover {
 
 /* ─── Image Reveal Section (Multi-Item Class Based) ─────────────── */
 .image-reveal-step {
-    background: var(--bg-dark);
+    background: transparent;
     transition: none !important;
     z-index: 20;
     /* 提升层级，防止被后续章节遮盖 */

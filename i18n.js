@@ -49,6 +49,17 @@ const i18n = {
             offset: "横向偏移",
             hint: "← 移动鼠标模拟轨道波动 →"
         },
+        data: {
+            speed: "设计时速",
+            person: "单舱乘员",
+            personDesc: "单舱乘员",
+            moca: "被动悬浮运行",
+            mocaDesc: "被动悬浮运行"
+        },
+        reveal: {
+            prompt: "扫描中..."
+
+        },
         benefits: {
             title: "为什么选择常轨磁悬浮？",
             frictionless: "告别摩擦",
@@ -142,6 +153,17 @@ const i18n = {
             coilR: "R-Coil Current",
             offset: "Lateral Offset",
             hint: "← Move mouse to simulate rail fluctuation →"
+        },
+        data: {
+            speed: "Design Speed",
+            person: "Single Cabin Capacity",
+            personDesc: "Single Cabin Capacity",
+            moca: "Passive Levitation Operation",
+            mocaDesc: "Passive Levitation Operation"
+        },
+        reveal: {
+            prompt: "Scanning..."
+
         },
         benefits: {
             title: "Why Choose MagTech?",

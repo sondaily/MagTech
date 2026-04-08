@@ -137,19 +137,19 @@
                             <h3
                                 style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
                                 200<span style="font-size: 1.2rem;"> km/h</span></h3>
-                            <p style="color: var(--text-muted);">设计时速</p>
+                            <p style="color: var(--text-muted);" data-i18n="data.speed">设计时速</p>
                         </div>
                         <div style="flex: 1; min-width: 200px; padding: 2rem;">
                             <h3
                                 style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
-                                4~6<span style="font-size: 1.2rem;"> 人</span></h3>
-                            <p style="color: var(--text-muted);">单舱乘员</p>
+                                4~6<span style="font-size: 1.2rem;" data-i18n="data.person"> 人</span></h3>
+                            <p style="color: var(--text-muted);" data-i18n="data.personDesc">单舱乘员</p>
                         </div>
                         <div style="flex: 1; min-width: 200px; padding: 2rem;">
                             <h3
                                 style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
-                                0<span style="font-size: 1.2rem;"> 摩擦</span></h3>
-                            <p style="color: var(--text-muted);">被动悬浮运行</p>
+                                0<span style="font-size: 1.2rem;" data-i18n="data.moca"> 摩擦</span></h3>
+                            <p style="color: var(--text-muted);" data-i18n="data.mocaDesc">被动悬浮运行</p>
                         </div>
                     </div>
                 </div>
@@ -165,13 +165,37 @@
             <section class="story-step image-reveal-step" style="padding: 0;">
                 <div class="reveal-container">
                     <!-- 底层图 -->
+                    <img src="image_1/侧视1.webp" class="image-outline" alt="透视图底图">
+                    <!-- 顶层揭示图 -->
+                    <img src="image_1/剖面.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
+                    <!-- 扫描线 -->
+                    <div class="scan-line reveal-scan-line"></div>
+                    <!-- 进度提示 -->
+                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
+                </div>
+            </section>
+            <section class="story-step image-reveal-step" style="padding: 0;">
+                <div class="reveal-container">
+                    <!-- 底层图 -->
+                    <img src="image_1/顶视1-1.webp" class="image-outline" alt="透视图底图">
+                    <!-- 顶层揭示图 -->
+                    <img src="image_1/剖视1.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
+                    <!-- 扫描线 -->
+                    <div class="scan-line reveal-scan-line"></div>
+                    <!-- 进度提示 -->
+                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
+                </div>
+            </section>
+            <section class="story-step image-reveal-step" style="padding: 0;">
+                <div class="reveal-container">
+                    <!-- 底层图 -->
                     <img src="image_1/touming1.webp" class="image-outline" alt="透视图底图">
                     <!-- 顶层揭示图 -->
                     <img src="image_1/touming1_1.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
                     <!-- 扫描线 -->
                     <div class="scan-line reveal-scan-line"></div>
                     <!-- 进度提示 -->
-                    <div class="reveal-hint">扫描中... <span class="percent-text">0</span>%</div>
+                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
                 </div>
             </section>
 
@@ -184,7 +208,7 @@
                     <!-- 扫描线 -->
                     <div class="scan-line reveal-scan-line"></div>
                     <!-- 进度提示 -->
-                    <div class="reveal-hint">扫描中... <span class="percent-text">0</span>%</div>
+                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
                 </div>
             </section>
 
@@ -197,10 +221,7 @@
                     <!-- 扫描线 -->
                     <div class="scan-line reveal-scan-line"></div>
                     <!-- 进度提示 -->
-                    <div class="reveal-hint">
-                        <span data-i18n="reveal.prompt">扫描中... </span>
-                        <span class="percent-text">0</span>%
-                    </div>
+                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
                 </div>
             </section>
 
