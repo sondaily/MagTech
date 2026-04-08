@@ -51,9 +51,9 @@ const i18n = {
         },
         data: {
             speed: "设计时速",
-            person: "单舱乘员",
+            person: "人",
             personDesc: "单舱乘员",
-            moca: "被动悬浮运行",
+            moca: "摩擦",
             mocaDesc: "被动悬浮运行"
         },
         reveal: {
@@ -156,9 +156,9 @@ const i18n = {
         },
         data: {
             speed: "Design Speed",
-            person: "Single Cabin Capacity",
+            person: "Person",
             personDesc: "Single Cabin Capacity",
-            moca: "Passive Levitation Operation",
+            moca: "Friction",
             mocaDesc: "Passive Levitation Operation"
         },
         reveal: {
