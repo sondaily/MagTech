@@ -152,7 +152,8 @@ const i18n = {
             coilL: "L-Coil Current",
             coilR: "R-Coil Current",
             offset: "Lateral Offset",
-            hint: "← Move mouse to simulate rail fluctuation →"
+            hint: "← Move mouse to simulate rail fluctuation →",
+            hints: "← Drag to rotate, scroll to zoom →"
         },
         data: {
             speed: "Design Speed",
