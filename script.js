@@ -198,6 +198,51 @@ revealSteps.forEach((step) => {
     }
 });
 
+/* ─── Video Sequence Logic ─────────────────────────────── */
+const runCanvas = document.getElementById("run-canvas");
+if (runCanvas) {
+    const context = runCanvas.getContext("2d");
+    runCanvas.width = 1280;
+    runCanvas.height = 720;
+
+    const frameCount = 60;
+    const currentFrame = index => (
+        `image/frames2/frame_${(index + 1).toString().padStart(4, '0')}.png`
+    );
+
+    const images = [];
+    const runFrames = { frame: 0 };
+
+    for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        images.push(img);
+    }
+
+    images[0].onload = renderRunFrame;
+
+    function renderRunFrame() {
+        if (images[runFrames.frame]) {
+            context.clearRect(0, 0, runCanvas.width, runCanvas.height);
+            context.drawImage(images[runFrames.frame], 0, 0, runCanvas.width, runCanvas.height);
+        }
+    }
+
+    gsap.to(runFrames, {
+        frame: frameCount - 1,
+        snap: "frame",
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#run-video-scroll",
+            start: "center center",
+            end: "+=1500",
+            scrub: 1,
+            pin: true
+        },
+        onUpdate: renderRunFrame
+    });
+}
+
 // 确保刷新，避免布局偏移
 ScrollTrigger.refresh();
 
