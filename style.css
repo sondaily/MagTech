@@ -1,15 +1,15 @@
 :root {
-    --primary: #03A6AC;
-    --primary-gradient: linear-gradient(135deg, #03A6AC 60%, #007AFF 40%);
+    --primary: #3fc809;
+    --primary-gradient: linear-gradient(135deg, #03A6AC 60%, #8eac27 40%);
     --secondary: #056e7c;
-    --bg-dark: #0a0a0c;
+    --bg-dark: #001024;
     --bg-light: #1c1c1e;
-    --text-main: #ffffff;
-    --text-muted: #cccccc;
+    --text-main: #3fc809;
+    --text-muted: #ffffff;
     --accent: #05549e;
     /* Electric Blue */
-    --glass: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass: rgba(255, 255, 255, 0);
+    --glass-border: rgba(255, 255, 255, 0);
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -328,7 +328,7 @@ nav {
 nav.scrolled {
     position: fixed;
     padding: 1rem 0;
-    background: rgba(10, 10, 12, 0.8);
+    background: rgba(0, 16, 36, 0.8);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--glass-border);
     animation: slideDown 0.5s ease;
@@ -752,7 +752,7 @@ model-viewer {
 #vignette-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, transparent 30%, rgba(10, 10, 12, 0.8) 100%);
+    background: radial-gradient(circle at center, transparent 30%, rgba(0, 16, 36, 0.8) 100%);
     pointer-events: none;
     z-index: 5;
 }
@@ -775,7 +775,7 @@ model-viewer {
 
 /* 文字层视觉增强 */
 .glass-content {
-    background: rgba(10, 10, 12, 0.7);
+    background: rgba(0, 16, 36, 0.7);
     backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
     padding: 3rem;
@@ -786,14 +786,14 @@ model-viewer {
 
 .side-content {
     max-width: 500px;
-    background: linear-gradient(to right, rgba(10, 10, 12, 0.9), transparent);
+    background: linear-gradient(to right, rgba(0, 16, 36, 0.9), transparent);
     padding: 2rem;
     border-left: 4px solid var(--primary);
 }
 
 .side-content.right {
     margin-left: auto;
-    background: linear-gradient(to left, rgba(10, 10, 12, 0.9), transparent);
+    background: linear-gradient(to left, rgba(0, 16, 36, 0.9), transparent);
     border-left: none;
     border-right: 4px solid var(--primary);
     text-align: right;
