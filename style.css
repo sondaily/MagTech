@@ -874,30 +874,9 @@ model-viewer {
     display: flex;
     align-items: center;
     padding: 10vh 0;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 1s ease;
-    pointer-events: none;
-    /* 默认穿透到背景 3D */
-}
-
-.story-step.active {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* 恢复 UI 元素的交互能力 */
-.story-step .container,
-.story-step .glass-content,
-.story-step .side-content,
-.story-step .glass-card,
-.story-step #contact-form,
-.story-step #sim-container,
-.story-step .video-preview-card,
-footer,
-.btn,
-.nav-links a {
-    pointer-events: auto;
+    transition: all 1s ease;
 }
 
 /* 页脚样式强化 */
@@ -917,14 +896,7 @@ footer .footer-links a:hover {
 }
 
 
-/* 初始隐藏状态供 GSAP 驱动 */
-#benefits .glass-card,
-#apps .video-preview-card,
-#apps .container>div,
-#contact .container {
-    opacity: 0;
-    transform: translateY(30px);
-}
+/* 内容默认可见 */
 
 
 /* 交互模拟器适配 */
@@ -1037,13 +1009,7 @@ footer .footer-links a:hover {
     overflow: hidden;
     border: 1px solid var(--glass-border);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    opacity: 0;
-    transform: translateX(-40px);
     background: rgba(0, 0, 0, 0.3);
-}
-
-.side-content.right .tech-diagram {
-    transform: translateX(40px);
 }
 
 .diag-img {
@@ -1056,8 +1022,8 @@ footer .footer-links a:hover {
 
 .animate-text h2,
 .animate-text p {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* 移动端响应式适配 */
@@ -1137,7 +1103,7 @@ footer .footer-links a:hover {
 
 /* ─── Image Reveal Section (Multi-Item Class Based) ─────────────── */
 .image-reveal-step {
-    background: transparent;
+    background: var(--bg-dark);
     transition: none !important;
     z-index: 20;
     /* 提升层级，防止被后续章节遮盖 */
