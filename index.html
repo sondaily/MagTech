@@ -54,15 +54,6 @@
     </nav>
 
     <div id="scrolly-container">
-        <!-- 3D 背景固定容器 -->
-        <div id="fixed-3d-background">
-            <div id="assembly-loading">
-                <div class="loading-ring"></div>
-                <span data-i18n="loading.text">正在加载 3D 叙事体验...</span>
-            </div>
-            <canvas id="main-canvas"></canvas>
-            <div id="vignette-overlay"></div>
-        </div>
 
         <!-- 滚动叙事内容层 -->
         <div id="story-content">
@@ -83,7 +74,7 @@
                 </div>
             </section>
 
-             <!-- 新增：运行滚动序列帧演示 -->
+            <!-- 新增：运行滚动序列帧演示 -->
             <section id="run-video-scroll" class="story-step" style="padding: 0;">
                 <div style="width: 100vw; height: 100vh; overflow: hidden;">
                     <canvas id="run-canvas"
@@ -578,7 +569,6 @@
 
     <script src="script.js"></script>
     <script type="module" src="maglev-sim.js"></script>
-    <script type="module" src="assembly-3d.js"></script>
     <script src="i18n.js"></script>
 </body>
 
