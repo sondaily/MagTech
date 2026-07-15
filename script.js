@@ -198,6 +198,51 @@ revealSteps.forEach((step) => {
     }
 });
 
+/* ─── Interior Video Sequence Logic ──────────────────────── */
+const interiorCanvas = document.getElementById("interior-canvas");
+if (interiorCanvas) {
+    const context = interiorCanvas.getContext("2d");
+    interiorCanvas.width = 1920;
+    interiorCanvas.height = 1080;
+
+    const frameCount = 62;
+    const currentFrame = index => (
+        `image/frames3/frame_${(index + 1).toString().padStart(4, '0')}.jpg`
+    );
+
+    const images = [];
+    const interiorFrames = { frame: 0 };
+
+    for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        images.push(img);
+    }
+
+    images[0].onload = renderInteriorFrame;
+
+    function renderInteriorFrame() {
+        if (images[interiorFrames.frame]) {
+            context.clearRect(0, 0, interiorCanvas.width, interiorCanvas.height);
+            context.drawImage(images[interiorFrames.frame], 0, 0, interiorCanvas.width, interiorCanvas.height);
+        }
+    }
+
+    gsap.to(interiorFrames, {
+        frame: frameCount - 1,
+        snap: "frame",
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#interior-video-scroll",
+            start: "center center",
+            end: "+=3000",
+            scrub: 1,
+            pin: true
+        },
+        onUpdate: renderInteriorFrame
+    });
+}
+
 /* ─── Video Sequence Logic ─────────────────────────────── */
 const runCanvas = document.getElementById("run-canvas");
 if (runCanvas) {
