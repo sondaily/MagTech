@@ -156,6 +156,8 @@ revealSteps.forEach((step) => {
     const percentTxt = step.querySelector('.percent-text');
 
     if (colorImg && scanLine) {
+        // 初始隐藏，防止后续 section 在文档流中提前露出
+        gsap.set(step, { opacity: 0 });
         // 显式设置初始状态
         gsap.set(colorImg, { clipPath: "inset(0 100% 0 0)" });
         gsap.set(scanLine, { left: "0%", display: "none" });
@@ -168,7 +170,9 @@ revealSteps.forEach((step) => {
                 pin: true,
                 scrub: 1,
                 invalidateOnRefresh: true,
-                anticipatePin: 1
+                anticipatePin: 1,
+                onEnter: () => gsap.set(step, { opacity: 1 }),
+                onLeaveBack: () => gsap.set(step, { opacity: 0 })
             }
         });
 

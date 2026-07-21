@@ -21,7 +21,11 @@
 }
 
 body {
-    background-color: var(--bg-dark);
+    background-image: url('image/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
@@ -1103,10 +1107,15 @@ footer .footer-links a:hover {
 
 /* ─── Image Reveal Section (Multi-Item Class Based) ─────────────── */
 .image-reveal-step {
-    background: var(--bg-dark);
+    /* 复制 body 背景：fixed attachment 使视觉与全局背景无缝衔接，同时阻止下层内容穿透 */
+    background-image: url('image/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     transition: none !important;
     z-index: 20;
-    /* 提升层级，防止被后续章节遮盖 */
+    isolation: isolate;
 }
 
 .image-reveal-step .container {
