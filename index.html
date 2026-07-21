@@ -74,6 +74,20 @@
                 </div>
             </section>
 
+            <!-- 新增：鼠标交互遮罩展示（内饰与外壳对比） -->
+            <section id="mask-reveal-section" class="story-step" style="padding: 0; position: relative; width: 100vw; height: 100vh; overflow: hidden;">
+                <div class="mask-container" style="position: relative; width: 100%; height: 100%; cursor: none;">
+                    <!-- 下层图片：内饰 -->
+                    <img src="image/遮罩内.png" class="mask-img mask-img-bg" alt="内饰">
+                    <!-- 上层图片：外壳 -->
+                    <img src="image/遮罩外.png" class="mask-img mask-img-fg" alt="外壳">
+                    <!-- 引导提示 -->
+                    <div class="mask-hint" data-i18n="mask.hint" style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 20; color: #fff; background: rgba(0,0,0,0.6); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; pointer-events: none;">
+                        移动鼠标探索内饰细节
+                    </div>
+                </div>
+            </section>
+
             <!-- 新增：内饰展示滚动序列帧演示 -->
             <section id="interior-video-scroll" class="story-step" style="padding: 0;">
                 <div style="width: 100vw; height: 100vh; overflow: hidden;">

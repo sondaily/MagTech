@@ -14,6 +14,9 @@ const i18n = {
         loading: {
             text: "正在加载 3D 叙事体验..."
         },
+        mask: {
+            hint: "移动鼠标探索内饰细节"
+        },
         hero: {
             title: "让磁悬浮<br><span style='color: var(--primary)'>在现有轨道</span>上飞驰",
             desc: "无需电力，无需新建轨道，在普通铁轨上实现静默、无摩擦的悬浮运输。",
@@ -118,6 +121,9 @@ const i18n = {
         },
         loading: {
             text: "Loading 3D Experience..."
+        },
+        mask: {
+            hint: "Move mouse to explore interior details"
         },
         hero: {
             title: "Maglev<br><span style='color: var(--primary)'>on Existing Railways</span>",

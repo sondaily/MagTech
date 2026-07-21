@@ -297,3 +297,24 @@ document.addEventListener('keydown', (e) => {
         window.closeLightbox();
     }
 });
+
+/* ─── Pointer Mask Reveal Interactive Logic ─────────────────── */
+const maskContainer = document.querySelector('#mask-reveal-section .mask-container');
+if (maskContainer) {
+    const fgImg = maskContainer.querySelector('.mask-img-fg');
+    
+    maskContainer.addEventListener('pointermove', (e) => {
+        const rect = maskContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        fgImg.style.setProperty('--mouse-x', `${x}px`);
+        fgImg.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    maskContainer.addEventListener('pointerleave', () => {
+        fgImg.style.setProperty('--mouse-x', `-1000px`);
+        fgImg.style.setProperty('--mouse-y', `-1000px`);
+    });
+}
+
