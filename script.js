@@ -106,116 +106,22 @@ if (contactForm) {
 }
 
 
-// Image Lightbox
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const lightboxClose = document.querySelector('.lightbox-close');
-const gridImages = document.querySelectorAll('.grid-item img');
-
-window.openLightbox = function (src) {
-    if (!lightbox || !lightboxImg) return;
-    lightboxImg.src = src;
-    lightbox.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Prevent scrolling
-};
-
-window.closeLightbox = function () {
-    if (!lightbox) return;
-    lightbox.style.display = 'none';
-    document.body.style.overflow = ''; // Restore scrolling
-};
-
-gridImages.forEach(img => {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-        window.openLightbox(img.src);
-    });
-});
-
-if (lightboxClose) {
-    lightboxClose.addEventListener('click', window.closeLightbox);
-}
-
-if (lightbox) {
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-            window.closeLightbox();
-        }
-    });
-}
-
-/* ─── Image Reveal Logic (GSAP Pinning & Bidirectional) ────────── */
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Image Reveal Logic (GSAP Pinning Loop) ─────────────────── */
-const revealSteps = document.querySelectorAll('.image-reveal-step');
+/* ─── Hero Video Sequence Logic ──────────────────────────── */
+const heroCanvas = document.getElementById("hero-canvas");
+if (heroCanvas) {
+    const context = heroCanvas.getContext("2d");
+    heroCanvas.width = 1920;
+    heroCanvas.height = 1080;
 
-revealSteps.forEach((step) => {
-    const colorImg = step.querySelector('.color-reveal-image');
-    const scanLine = step.querySelector('.reveal-scan-line');
-    const percentTxt = step.querySelector('.percent-text');
-
-    if (colorImg && scanLine) {
-        // 初始隐藏，防止后续 section 在文档流中提前露出
-        gsap.set(step, { opacity: 0 });
-        // 显式设置初始状态
-        gsap.set(colorImg, { clipPath: "inset(0 100% 0 0)" });
-        gsap.set(scanLine, { left: "0%", display: "none" });
-
-        const revealTimeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: step,
-                start: "top top",
-                end: "+=1500", // 增加深度感
-                pin: true,
-                scrub: 1,
-                invalidateOnRefresh: true,
-                anticipatePin: 1,
-                onEnter: () => gsap.set(step, { opacity: 1 }),
-                onLeaveBack: () => gsap.set(step, { opacity: 0 })
-            }
-        });
-
-        // 绑定同步动画
-        revealTimeline.to(colorImg, {
-            clipPath: "inset(0 0% 0 0)",
-            ease: "none"
-        }, 0);
-
-        revealTimeline.to(scanLine, {
-            left: "100%",
-            ease: "none"
-        }, 0);
-
-        revealTimeline.set(scanLine, { display: "block" }, 0.01);
-        revealTimeline.set(scanLine, { display: "none" }, 0.99);
-
-        revealTimeline.to({}, {
-            duration: 1,
-            onUpdate: function () {
-                if (percentTxt) {
-                    percentTxt.innerText = Math.round(this.progress() * 100);
-                }
-            },
-            ease: "none"
-        }, 0);
-    }
-});
-
-/* ─── Interior Video Sequence Logic ──────────────────────── */
-const interiorCanvas = document.getElementById("interior-canvas");
-if (interiorCanvas) {
-    const context = interiorCanvas.getContext("2d");
-    interiorCanvas.width = 1920;
-    interiorCanvas.height = 1080;
-
-    const frameCount = 62;
+    const frameCount = 80;
     const currentFrame = index => (
-        `image/frames3/frame_${(index + 1).toString().padStart(4, '0')}.jpg`
+        `image/frames_hero/frame_${(index + 1).toString().padStart(4, '0')}.webp`
     );
 
     const images = [];
-    const interiorFrames = { frame: 0 };
+    const heroFrames = { frame: 0 };
 
     for (let i = 0; i < frameCount; i++) {
         const img = new Image();
@@ -223,44 +129,44 @@ if (interiorCanvas) {
         images.push(img);
     }
 
-    images[0].onload = renderInteriorFrame;
+    images[0].onload = renderHeroFrame;
 
-    function renderInteriorFrame() {
-        if (images[interiorFrames.frame]) {
-            context.clearRect(0, 0, interiorCanvas.width, interiorCanvas.height);
-            context.drawImage(images[interiorFrames.frame], 0, 0, interiorCanvas.width, interiorCanvas.height);
+    function renderHeroFrame() {
+        if (images[heroFrames.frame]) {
+            context.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+            context.drawImage(images[heroFrames.frame], 0, 0, heroCanvas.width, heroCanvas.height);
         }
     }
 
-    gsap.to(interiorFrames, {
+    gsap.to(heroFrames, {
         frame: frameCount - 1,
         snap: "frame",
         ease: "none",
         scrollTrigger: {
-            trigger: "#interior-video-scroll",
-            start: "center center",
-            end: "+=3000",
+            trigger: "#hero",
+            start: "top top",
+            end: "+=2000",
             scrub: 1,
             pin: true
         },
-        onUpdate: renderInteriorFrame
+        onUpdate: renderHeroFrame
     });
 }
 
-/* ─── Video Sequence Logic ─────────────────────────────── */
-const runCanvas = document.getElementById("run-canvas");
-if (runCanvas) {
-    const context = runCanvas.getContext("2d");
-    runCanvas.width = 1280;
-    runCanvas.height = 720;
+/* ─── One Video Sequence Logic ─────────────────────────────── */
+const oneCanvas = document.getElementById("one-canvas");
+if (oneCanvas) {
+    const context = oneCanvas.getContext("2d");
+    oneCanvas.width = 1920;
+    oneCanvas.height = 1080;
 
-    const frameCount = 60;
+    const frameCount = 90;
     const currentFrame = index => (
-        `image/frames2/frame_${(index + 1).toString().padStart(4, '0')}.png`
+        `image/frames_one/frame_${(index + 1).toString().padStart(4, '0')}.webp`
     );
 
     const images = [];
-    const runFrames = { frame: 0 };
+    const oneFrames = { frame: 0 };
 
     for (let i = 0; i < frameCount; i++) {
         const img = new Image();
@@ -268,57 +174,174 @@ if (runCanvas) {
         images.push(img);
     }
 
-    images[0].onload = renderRunFrame;
+    images[0].onload = renderOneFrame;
 
-    function renderRunFrame() {
-        if (images[runFrames.frame]) {
-            context.clearRect(0, 0, runCanvas.width, runCanvas.height);
-            context.drawImage(images[runFrames.frame], 0, 0, runCanvas.width, runCanvas.height);
+    function renderOneFrame() {
+        if (images[oneFrames.frame]) {
+            context.clearRect(0, 0, oneCanvas.width, oneCanvas.height);
+            context.drawImage(images[oneFrames.frame], 0, 0, oneCanvas.width, oneCanvas.height);
         }
     }
 
-    gsap.to(runFrames, {
+    gsap.to(oneFrames, {
         frame: frameCount - 1,
         snap: "frame",
         ease: "none",
         scrollTrigger: {
-            trigger: "#run-video-scroll",
-            start: "center center",
-            end: "+=1500",
+            trigger: "#one-video-scroll",
+            start: "top top",
+            end: "+=2500",
             scrub: 1,
             pin: true
         },
-        onUpdate: renderRunFrame
+        onUpdate: renderOneFrame
+    });
+}
+
+/* ─── Specs Video Sequence Logic ───────────────────────────── */
+const specsCanvas = document.getElementById("specs-canvas");
+if (specsCanvas) {
+    const context = specsCanvas.getContext("2d");
+    specsCanvas.width = 1920;
+    specsCanvas.height = 1080;
+
+    const frameCount = 90;
+    const currentFrame = index => (
+        `image/frames_zhanshi/frame_${(index + 1).toString().padStart(4, '0')}.webp`
+    );
+
+    const images = [];
+    const specsFrames = { frame: 0 };
+
+    for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        images.push(img);
+    }
+
+    images[0].onload = renderSpecsFrame;
+
+    function renderSpecsFrame() {
+        if (images[specsFrames.frame]) {
+            context.clearRect(0, 0, specsCanvas.width, specsCanvas.height);
+            context.drawImage(images[specsFrames.frame], 0, 0, specsCanvas.width, specsCanvas.height);
+        }
+    }
+
+    gsap.to(specsFrames, {
+        frame: frameCount - 1,
+        snap: "frame",
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#specs-step",
+            start: "top top",
+            end: "+=2000",
+            scrub: 1,
+            pin: true
+        },
+        onUpdate: renderSpecsFrame
+    });
+}
+
+/* ─── Liuti Video Sequence Logic ───────────────────────────── */
+const liutiCanvas = document.getElementById("liuti-canvas");
+if (liutiCanvas) {
+    const context = liutiCanvas.getContext("2d");
+    liutiCanvas.width = 1920;
+    liutiCanvas.height = 1080;
+
+    const frameCount = 90;
+    const currentFrame = index => (
+        `image/frames_liuti/frame_${(index + 1).toString().padStart(4, '0')}.webp`
+    );
+
+    const images = [];
+    const liutiFrames = { frame: 0 };
+
+    for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        images.push(img);
+    }
+
+    images[0].onload = renderLiutiFrame;
+
+    function renderLiutiFrame() {
+        if (images[liutiFrames.frame]) {
+            context.clearRect(0, 0, liutiCanvas.width, liutiCanvas.height);
+            context.drawImage(images[liutiFrames.frame], 0, 0, liutiCanvas.width, liutiCanvas.height);
+        }
+    }
+
+    gsap.to(liutiFrames, {
+        frame: frameCount - 1,
+        snap: "frame",
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#liuti-video-scroll",
+            start: "top top",
+            end: "+=2500",
+            scrub: 1,
+            pin: true
+        },
+        onUpdate: renderLiutiFrame
     });
 }
 
 // 确保刷新，避免布局偏移
 ScrollTrigger.refresh();
 
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && (lightbox.style.display === 'block' || lightbox.style.display === 'flex')) {
-        window.closeLightbox();
-    }
-});
+// /* ─── Pointer Mask Reveal Interactive Logic (#tech-passive) ─── */
+// const techPassiveSection = document.getElementById('tech-passive', 'tech-active');
+// if (techPassiveSection) {
+//     const fgImg = techPassiveSection.querySelector('.mask-img-fg');
+//     if (fgImg) {
+//         techPassiveSection.addEventListener('pointermove', (e) => {
+//             const rect = techPassiveSection.getBoundingClientRect();
+//             const x = e.clientX - rect.left;
+//             const y = e.clientY - rect.top;
 
-/* ─── Pointer Mask Reveal Interactive Logic ─────────────────── */
-const maskContainer = document.querySelector('#mask-reveal-section .mask-container');
-if (maskContainer) {
-    const fgImg = maskContainer.querySelector('.mask-img-fg');
-    
-    maskContainer.addEventListener('pointermove', (e) => {
-        const rect = maskContainer.getBoundingClientRect();
+//             fgImg.style.setProperty('--mouse-x', `${x}px`);
+//             fgImg.style.setProperty('--mouse-y', `${y}px`);
+//         });
+
+//         techPassiveSection.addEventListener('pointerleave', () => {
+//             fgImg.style.setProperty('--mouse-x', `-1000px`);
+//             fgImg.style.setProperty('--mouse-y', `-1000px`);
+//         });
+//     }
+// }
+
+/* ─── Pointer Mask Reveal Interactive Logic (#tech-passive & #tech-active) ─── */
+// 使用 querySelectorAll 匹配多个 ID
+const revealSections = document.querySelectorAll('#tech-passive, #tech-active');
+
+revealSections.forEach((section) => {
+    const fgImg = section.querySelector('.mask-img-fg');
+    if (!fgImg) return;
+
+    let rafId = null;
+
+    section.addEventListener('pointermove', (e) => {
+        const rect = section.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
-        fgImg.style.setProperty('--mouse-x', `${x}px`);
-        fgImg.style.setProperty('--mouse-y', `${y}px`);
+
+        // 使用 requestAnimationFrame 优化性能，避免高刷屏掉帧
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+            fgImg.style.setProperty('--mouse-x', `${x}px`);
+            fgImg.style.setProperty('--mouse-y', `${y}px`);
+        });
     });
 
-    maskContainer.addEventListener('pointerleave', () => {
+    section.addEventListener('pointerleave', () => {
+        if (rafId) cancelAnimationFrame(rafId);
         fgImg.style.setProperty('--mouse-x', `-1000px`);
         fgImg.style.setProperty('--mouse-y', `-1000px`);
     });
-}
+});
+
+
+
 

@@ -59,10 +59,7 @@ const i18n = {
             moca: "摩擦",
             mocaDesc: "被动悬浮运行"
         },
-        reveal: {
-            prompt: "扫描中..."
 
-        },
         benefits: {
             title: "为什么选择常轨磁悬浮？",
             frictionless: "告别摩擦",
@@ -80,10 +77,7 @@ const i18n = {
             item3: "跨城市高速客运系统",
             videoFallback: "您的浏览器不支持视频播放。"
         },
-        gallery: {
-            title: "实拍展示",
-            desc: "近距离感受常轨磁悬浮技术的工业魅力。"
-        },
+
         contact: {
             title: "联系我们",
             formTitle: "发送消息",
@@ -168,10 +162,7 @@ const i18n = {
             moca: "Friction",
             mocaDesc: "Passive Levitation Operation"
         },
-        reveal: {
-            prompt: "Scanning..."
 
-        },
         benefits: {
             title: "Why Choose MagTech?",
             frictionless: "Frictionless",
@@ -189,10 +180,7 @@ const i18n = {
             item3: "Cross-city high-speed passenger system",
             videoFallback: "Your browser does not support the video tag."
         },
-        gallery: {
-            title: "Gallery",
-            desc: "Experience the industrial charm of MagTech technology up close."
-        },
+
         contact: {
             title: "Contact Us",
             formTitle: "Send Message",

@@ -58,8 +58,14 @@
         <!-- 滚动叙事内容层 -->
         <div id="story-content">
             <!-- 1. Hero 阶段 -->
-            <section id="hero" class="story-step active">
-                <div class="container">
+            <section id="hero" class="story-step active"
+                style="padding: 0; position: relative; width: 100vw; height: 100vh; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">
+                    <canvas id="hero-canvas"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65);"></canvas>
+                </div>
+                <div class="container"
+                    style="position: relative; z-index: 10; height: 100%; display: flex; align-items: center;">
                     <div class="reveal">
                         <h1 data-i18n="hero.title">让磁悬浮<br><span style="color: var(--primary)"
                                 data-i18n="hero.title">在现有轨道</span>上飞驰</h1>
@@ -74,33 +80,10 @@
                 </div>
             </section>
 
-            <!-- 新增：鼠标交互遮罩展示（内饰与外壳对比） -->
-            <section id="mask-reveal-section" class="story-step" style="padding: 0; position: relative; width: 100vw; height: 100vh; overflow: hidden;">
-                <div class="mask-container" style="position: relative; width: 100%; height: 100%; cursor: none;">
-                    <!-- 下层图片：内饰 -->
-                    <img src="image/遮罩内.png" class="mask-img mask-img-bg" alt="内饰">
-                    <!-- 上层图片：外壳 -->
-                    <img src="image/遮罩外.png" class="mask-img mask-img-fg" alt="外壳">
-                    <!-- 引导提示 -->
-                    <div class="mask-hint" data-i18n="mask.hint" style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 20; color: #fff; background: rgba(0,0,0,0.6); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; pointer-events: none;">
-                        移动鼠标探索内饰细节
-                    </div>
-                </div>
-            </section>
-
-            <!-- 新增：内饰展示滚动序列帧演示 -->
-            <section id="interior-video-scroll" class="story-step" style="padding: 0;">
+            <!-- 新增：one.mp4 滚动序列帧演示 -->
+            <section id="one-video-scroll" class="story-step" style="padding: 0;">
                 <div style="width: 100vw; height: 100vh; overflow: hidden;">
-                    <canvas id="interior-canvas"
-                        style="width: 100%; height: 100%; object-fit: cover;"></canvas>
-                </div>
-            </section>
-
-            <!-- 新增：运行滚动序列帧演示 -->
-            <section id="run-video-scroll" class="story-step" style="padding: 0;">
-                <div style="width: 100vw; height: 100vh; overflow: hidden;">
-                    <canvas id="run-canvas"
-                        style="width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen;"></canvas>
+                    <canvas id="one-canvas" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
                 </div>
             </section>
 
@@ -150,27 +133,36 @@
             </section>
 
             <!-- 新增：核心参数展示 -->
-            <section id="specs-step" class="story-step" style="padding: 4rem 0;">
-                <div class="container">
+            <section id="specs-step" class="story-step"
+                style="padding: 0; position: relative; width: 100vw; height: 100vh; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">
+                    <canvas id="specs-canvas"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);"></canvas>
+                </div>
+                <div class="container"
+                    style="position: relative; z-index: 10; height: 100%; display: flex; align-items: center;">
                     <div
-                        style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; text-align: center;">
-                        <div style="flex: 1; min-width: 200px; padding: 2rem;">
+                        style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; text-align: center; width: 100%;">
+                        <div style="flex: 1; min-width: 200px; padding: 2rem; background: transparent;">
                             <h3
-                                style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
-                                200<span style="font-size: 1.2rem;"> km/h</span></h3>
-                            <p style="color: var(--text-muted);" data-i18n="data.speed">设计时速</p>
+                                style="color: var(--primary); font-size: 3.5rem; margin-bottom: 0.5rem; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.8);">
+                                200<span style="font-size: 1.4rem;"> km/h</span></h3>
+                            <p style="color: #fff; font-size: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.8);"
+                                data-i18n="data.speed">设计时速</p>
                         </div>
-                        <div style="flex: 1; min-width: 200px; padding: 2rem;">
+                        <div style="flex: 1; min-width: 200px; padding: 2rem; background: transparent;">
                             <h3
-                                style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
-                                4~6<span style="font-size: 1.2rem;" data-i18n="data.person"> 人</span></h3>
-                            <p style="color: var(--text-muted);" data-i18n="data.personDesc">单舱乘员</p>
+                                style="color: var(--primary); font-size: 3.5rem; margin-bottom: 0.5rem; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.8);">
+                                4~6<span style="font-size: 1.4rem;" data-i18n="data.person"> 人</span></h3>
+                            <p style="color: #fff; font-size: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.8);"
+                                data-i18n="data.personDesc">单舱乘员</p>
                         </div>
-                        <div style="flex: 1; min-width: 200px; padding: 2rem;">
+                        <div style="flex: 1; min-width: 200px; padding: 2rem; background: transparent;">
                             <h3
-                                style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">
-                                0<span style="font-size: 1.2rem;" data-i18n="data.moca"> 摩擦</span></h3>
-                            <p style="color: var(--text-muted);" data-i18n="data.mocaDesc">被动悬浮运行</p>
+                                style="color: var(--primary); font-size: 3.5rem; margin-bottom: 0.5rem; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.8);">
+                                0<span style="font-size: 1.4rem;" data-i18n="data.moca"> 摩擦</span></h3>
+                            <p style="color: #fff; font-size: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.8);"
+                                data-i18n="data.mocaDesc">被动悬浮运行</p>
                         </div>
                     </div>
                 </div>
@@ -182,101 +174,50 @@
                 <div class="container"></div>
             </section>
 
-            <!-- 2.5 图像直观揭示 (由线稿到实物) -->
-            <section class="story-step image-reveal-step" style="padding: 0;">
-                <div class="reveal-container">
-                    <!-- 底层图 -->
-                    <img src="image_1/侧视1.webp" class="image-outline" alt="透视图底图">
-                    <!-- 顶层揭示图 -->
-                    <img src="image_1/剖面.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
-                    <!-- 扫描线 -->
-                    <div class="scan-line reveal-scan-line"></div>
-                    <!-- 进度提示 -->
-                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
-                </div>
-            </section>
-            <section class="story-step image-reveal-step" style="padding: 0;">
-                <div class="reveal-container">
-                    <!-- 底层图 -->
-                    <img src="image_1/顶视1-1.webp" class="image-outline" alt="透视图底图">
-                    <!-- 顶层揭示图 -->
-                    <img src="image_1/剖视1.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
-                    <!-- 扫描线 -->
-                    <div class="scan-line reveal-scan-line"></div>
-                    <!-- 进度提示 -->
-                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
-                </div>
-            </section>
-            <section class="story-step image-reveal-step" style="padding: 0;">
-                <div class="reveal-container">
-                    <!-- 底层图 -->
-                    <img src="image_1/touming1.webp" class="image-outline" alt="透视图底图">
-                    <!-- 顶层揭示图 -->
-                    <img src="image_1/touming1_1.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
-                    <!-- 扫描线 -->
-                    <div class="scan-line reveal-scan-line"></div>
-                    <!-- 进度提示 -->
-                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
-                </div>
-            </section>
-
-            <section class="story-step image-reveal-step" style="padding: 0;">
-                <div class="reveal-container">
-                    <!-- 底层图 -->
-                    <img src="image_1/touming2.webp" class="image-outline" alt="透视图底图">
-                    <!-- 顶层揭示图 -->
-                    <img src="image_1/touming2_2.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
-                    <!-- 扫描线 -->
-                    <div class="scan-line reveal-scan-line"></div>
-                    <!-- 进度提示 -->
-                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
-                </div>
-            </section>
-
-            <section class="story-step image-reveal-step" style="padding: 0;">
-                <div class="reveal-container">
-                    <!-- 底层图 -->
-                    <img src="image_1/touming3.webp" class="image-outline" alt="透视图底图">
-                    <!-- 顶层揭示图 -->
-                    <img src="image_1/touming3-3.webp" class="image-color color-reveal-image" alt="透视图彩色揭示图">
-                    <!-- 扫描线 -->
-                    <div class="scan-line reveal-scan-line"></div>
-                    <!-- 进度提示 -->
-                    <div class="reveal-hint" data-i18n="reveal.prompt">扫描中... <span class="percent-text">0</span>%</div>
-                </div>
-            </section>
 
             <!-- 3. 技术原理 (被动悬浮) -->
-            <section id="tech-passive" class="story-step">
-                <div class="container">
-                    <div class="side-content left animate-text" style="background: transparent; border: none;">
-                        <h2 data-i18n="tech.passive">被动悬浮技术</h2>
-                        <p data-i18n="tech.passiveDesc">
+            <section id="tech-passive" class="story-step"
+                style="padding: 0; position: relative; width: 100vw; height: 100vh; overflow: hidden;">
+                <!-- 鼠标交互羽化蒙版背景 -->
+                <div class="mask-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <img src="image/遮罩内.png" class="mask-img mask-img-bg" alt="内部结构"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                    <img src="image/遮罩外.png" class="mask-img mask-img-fg" alt="外观遮罩"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="container"
+                    style="position: relative; z-index: 10; height: 100%; display: flex; align-items: center;">
+                    <div class="side-content left animate-text"
+                        style="padding: 2.5rem; max-width: 520px; background: transparent; border: none; box-shadow: none;">
+                        <h2 style="text-shadow: 0 4px 20px rgba(0,0,0,0.8);" data-i18n="tech.passive">被动悬浮技术</h2>
+                        <p style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" data-i18n="tech.passiveDesc">
                             基于特殊排列的永磁体，无需外部电力即可实现物体悬浮。
                         </p>
-                        <!-- 新增：技术原理图示 -->
-                        <div class="tech-diagram reveal-img">
-                            <img src="image/1-1.png" alt="Passive Levitation Diagram" class="diag-img">
-                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. 技术原理 (动态控制) -->
-            <section id="tech-active" class="story-step">
-                <div class="container">
-                    <div class="side-content right animate-text" style="background: transparent; border: none;">
-                        <h2 data-i18n="tech.active">动态控制系统</h2>
-                        <p data-i18n="tech.activeDesc">
+            <section id="tech-active" class="story-step"
+                style="padding: 0; position: relative; width: 100vw; height: 100vh; overflow: hidden;">
+                <!-- 鼠标交互羽化蒙版背景 -->
+                <div class="mask-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <img src="image_1/touming1.webp" class="mask-img mask-img-bg" alt="内部结构"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                    <img src="image_1/touming1_1.webp" class="mask-img mask-img-fg" alt="外观遮罩"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="container"
+                    style="position: relative; z-index: 10; height: 100%; display: flex; align-items: center;">
+                    <div class="side-content left animate-text"
+                        style="padding: 2.5rem; max-width: 520px; background: transparent; border: none; box-shadow: none;">
+                        <h2 style="text-shadow: 0 4px 20px rgba(0,0,0,0.8);" data-i18n="tech.active">动态控制系统</h2>
+                        <p style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" data-i18n="tech.activeDesc">
                             通过混合磁场动态主动控制，确保完美的中心对齐。
                         </p>
-                        <!-- 新增：控制逻辑图示 -->
-                        <div class="tech-diagram reveal-img">
-                            <img src="image/1-2.png" alt="Dynamic Control Diagram" class="diag-img">
-                        </div>
                     </div>
                 </div>
             </section>
+
 
             <!-- 5. 交互模拟器 -->
             <section id="tech" class="story-step interaction-step" style="background: transparent;">
@@ -310,6 +251,12 @@
                 </div>
             </section>
 
+            <!-- 新增：流体仿真滚动帧序列演示 -->
+            <section id="liuti-video-scroll" class="story-step" style="padding: 0;">
+                <div style="width: 100vw; height: 100vh; overflow: hidden;">
+                    <canvas id="liuti-canvas" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
+                </div>
+            </section>
 
             <!-- 6. 核心优势 -->
             <section id="benefits" class="story-step" style="background: rgba(28, 28, 30, 0);">
@@ -338,161 +285,7 @@
                 </div>
             </section>
 
-            <!-- 新增：产品实拍画廊 -->
-            <section id="gallery-step" class="story-step" style="min-height: unset; height: auto; padding: 4rem 0;">
-                <div class="container">
 
-                    <div class="gallery-track"
-                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/1-1.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/1-2.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/1-3.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/1-4.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/2.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/3.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/5.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/6.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/7.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/8.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/9.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/10.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/11.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/12.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/13.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/14.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/16.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/17.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-
-
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/20.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/21.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/33.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/222.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/333.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/1111.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/111111.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/2222222.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/3333333.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/22222222.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/44444444.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/55555555.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-
-
-
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/222222222.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/2222222222.webp" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/Untitled1111111.webp"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="gallery-item glass-card" onclick="openLightbox(this.querySelector('img').src)"
-                            style="height: 360px; overflow: hidden; border-radius: 16px; cursor: zoom-in;">
-                            <img src="image_1/Untitled11111111.webp"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <!-- 7. 应用场景 -->
             <section id="apps" class="story-step" style="padding: 0;">
@@ -574,20 +367,6 @@
             </footer>
         </div> <!-- End story-content -->
     </div> <!-- End scrolly-container -->
-
-    <div id="lightbox" onclick="window.closeLightbox()" style="
-        display:none; position:fixed; inset:0; z-index:9999;
-        background:rgba(0,0,0,0.92); align-items:center; justify-content:center;
-        backdrop-filter:blur(8px); cursor:zoom-out;">
-        <img id="lightbox-img" src="" style="
-            max-width:90vw; max-height:90vh; border-radius:12px;
-            box-shadow:0 0 60px rgba(0,0,0,0.8);
-            transition:opacity .3s ease;" />
-        <button onclick="window.closeLightbox()" class="lightbox-close" style="
-            position:absolute; top:1.5rem; right:2rem; background:none;
-            border:none; color:#fff; font-size:2.5rem; cursor:pointer;
-            line-height:1;">&times;</button>
-    </div>
 
     <script src="script.js"></script>
     <script type="module" src="maglev-sim.js"></script>
